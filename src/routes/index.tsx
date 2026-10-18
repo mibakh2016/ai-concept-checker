@@ -55,6 +55,8 @@ function Index() {
   const [result, setResult] = useState<Result | null>(null);
   const [busy, setBusy] = useState<null | "analyze" | "retry" | "judge">(null);
   const [error, setError] = useState<string | null>(null);
+  const [stepsOpen, setStepsOpen] = useState(true);
+  const [showAll, setShowAll] = useState(false);
 
   const reset = () => {
     setConcept(null); setExplanation(""); setGap(null); setSecondTry("");
@@ -70,57 +72,86 @@ function Index() {
     <main className="mx-auto min-h-screen w-full max-w-[640px] px-5 py-10 font-sans sm:py-16">
       <header className="mb-8">
         <div className="mx-auto w-fit">
-          <h1 className="text-left text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
-            Learning topic:<br />How Gen AI apps work
+          <h1 className="text-left leading-tight tracking-tight">
+            <span className="block text-lg font-bold text-primary sm:text-xl">Learning topic:</span>
+            <span className="block text-2xl font-bold sm:text-3xl">How Gen AI apps work</span>
           </h1>
         </div>
-        <div className="mt-6">
-          <p className="mb-3 text-xs font-bold uppercase tracking-widest text-foreground">What this is</p>
-          <p className="text-base leading-relaxed text-foreground">
-            A 3-minute check that shows if you really understand an idea, or are just repeating words you've heard.
+        <p className="mt-6 text-base leading-relaxed text-foreground">
+          Explain a concept in your own words. We guide you to real understanding if needed.
+        </p>
+
+        <div className="mt-5 rounded-xl border bg-card p-4 shadow-sm">
+          <p className="mb-2 text-xs font-bold uppercase tracking-widest text-muted-foreground">Example</p>
+          <p className="leading-relaxed">&ldquo;You need a password to log in.&rdquo;</p>
+          <p className="leading-relaxed">
+            <mark className="rounded bg-highlight px-1 text-highlight-foreground">It's private because of encryption.</mark>
           </p>
-
-          <p className="mb-3 mt-5 text-xs font-bold uppercase tracking-widest text-foreground">How it works</p>
-          <ol className="flex flex-col gap-2">
-            {[
-              "Pick a question below.",
-              "Explain the answer in your own words, like telling a friend.",
-              "See the sentence where you started repeating instead of explaining. It's highlighted in yellow.",
-              "Answer one follow-up question about it.",
-              "Solve a new case you haven't seen.",
-            ].map((step, i) => (
-              <li key={i} className="flex items-start gap-3 text-base leading-relaxed text-foreground">
-                <span className="font-bold">{i + 1}.</span>
-                <span>{step}</span>
-              </li>
-            ))}
-          </ol>
-
-          <p className="mb-3 mt-5 text-xs font-bold uppercase tracking-widest text-foreground">What you get</p>
-          <p className="text-base leading-relaxed text-foreground">Pass or Not yet, plus the correct answer.</p>
+          <p className="mt-2 text-sm font-semibold text-destructive">↑ here they stopped explaining</p>
         </div>
+
+        {!concept || stepsOpen ? (
+          <div className="mt-5 rounded-xl bg-primary/5 p-4 sm:p-5">
+            <p className="mb-3 font-bold">How it works</p>
+            <ol className="flex flex-col gap-2">
+              {[
+                ["Pick", "a question"],
+                ["Explain", "in your own words"],
+                ["Answer", "one follow-up"],
+                ["Solve", "a new case → Pass / Not yet"],
+              ].map(([verb, rest], i) => (
+                <li key={i} className="flex items-start gap-3 text-base leading-relaxed text-foreground">
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">{i + 1}</span>
+                  <span>
+                    <span className="font-bold">{verb}</span> {rest}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ) : (
+          <button type="button" onClick={() => setStepsOpen(true)}
+            className="mt-5 font-bold text-primary">
+            How it works ▾
+          </button>
+        )}
       </header>
 
-      <p className="mb-3 text-xs font-bold uppercase tracking-widest text-foreground">Pick a question</p>
+      <p className="mb-3 text-lg font-bold text-foreground">👆 Pick a concept question</p>
       <div className="flex flex-col gap-3">
-        {(concept ? [concept] : data.concepts).map((c, i) => {
+        {(concept ? [concept] : showAll ? data.concepts : data.concepts.slice(0, 3)).map((c, i) => {
           const selected = concept?.id === c.id;
           return (
             <button
               key={c.id}
               type="button"
               disabled={!!concept}
-              onClick={() => setConcept(c)}
-              className={`w-full rounded-xl border bg-card px-5 py-4 text-left text-base shadow-sm transition hover:border-foreground/40 disabled:cursor-default ${
-                selected ? "border-2 border-foreground font-bold" : ""
+              onClick={() => { setConcept(c); setStepsOpen(false); }}
+              className={`flex w-full items-center justify-between gap-3 rounded-xl border bg-card px-5 py-4 text-left text-base shadow-sm transition hover:border-foreground/40 disabled:cursor-default ${
+                selected ? "border-2 border-foreground" : ""
               }`}
             >
-              <span className="mr-2 font-bold text-muted-foreground">{i + 1}.</span>
-              {c.question}
+              <span>
+                <span className="mr-2 font-bold text-muted-foreground">{i + 1}.</span>
+                <span className="font-bold">{c.question}</span>
+              </span>
+              <span aria-hidden className="shrink-0 font-bold text-primary">→</span>
             </button>
           );
         })}
       </div>
+      {!concept && data.concepts.length > 3 && (
+        <div className="mt-4 text-center">
+          {!showAll && (
+            <button type="button" onClick={() => setShowAll(true)} className="font-bold text-primary">
+              {data.concepts.length - 3} more questions ▾
+            </button>
+          )}
+          <p className="mt-2 text-sm text-muted-foreground">
+            Showing {showAll ? data.concepts.length : 3} of {data.concepts.length}
+          </p>
+        </div>
+      )}
 
       {concept && (
         <Card>
