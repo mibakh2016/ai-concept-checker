@@ -78,8 +78,8 @@ function Index() {
       <header className="mb-8">
         <div className="mx-auto w-fit">
           <h1 className="text-left leading-tight tracking-tight">
-            <span className="block text-lg font-bold text-primary sm:text-xl">Learning topic:</span>
-            <span className="block text-2xl font-bold sm:text-3xl">How Gen AI apps work</span>
+            <span className="block text-xl font-bold text-primary sm:text-2xl">Learning topic:</span>
+            <span className="block text-2xl font-bold sm:text-2xl">How Gen AI apps work</span>
           </h1>
         </div>
         <p className="mt-6 text-base leading-relaxed text-foreground">
