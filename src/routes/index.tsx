@@ -71,7 +71,7 @@ function Index() {
       <header className="mb-8">
         <h1 className="text-center text-xs font-bold uppercase tracking-widest text-foreground">Learning topic</h1>
         <p className="mt-1 text-center text-2xl font-bold tracking-tight sm:text-3xl">How Gen AI Apps Work</p>
-        <div className="mt-6 rounded-2xl bg-primary/5 p-5 sm:p-6">
+        <div className="mt-6">
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-foreground">What this is</p>
           <p className="text-base leading-relaxed text-foreground">
             A 3-minute check that shows if you really understand an idea, or are just repeating words you've heard.
@@ -87,9 +87,7 @@ function Index() {
               "Solve a new case you haven't seen.",
             ].map((step, i) => (
               <li key={i} className="flex items-start gap-3 text-base leading-relaxed text-foreground">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-                  {i + 1}
-                </span>
+                <span className="font-bold">{i + 1}.</span>
                 <span>{step}</span>
               </li>
             ))}
