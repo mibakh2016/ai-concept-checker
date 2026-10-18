@@ -96,8 +96,8 @@ function Index() {
         </div>
 
         {!concept || stepsOpen ? (
-          <div className="mt-5 rounded-xl bg-primary/5 p-4 sm:p-5">
-            <p className="mb-3 font-bold">How it works</p>
+          <div className="mt-5 rounded-xl border border-primary bg-primary/5 p-4 sm:p-5">
+            <p className="mb-3 font-bold text-primary">How it works</p>
             <ol className="flex flex-col gap-2">
               {[
                 ["Pick", "a question"],
