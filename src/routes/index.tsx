@@ -70,27 +70,32 @@ function Index() {
     <main className="mx-auto min-h-screen w-full max-w-[640px] px-5 py-10 font-sans sm:py-16">
       <header className="mb-8">
         <h1 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">{data.topicName}</h1>
-        <div className="mt-6 rounded-2xl bg-primary/5 p-5">
-          <p className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-foreground">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 16v-4" />
-              <path d="M12 8h.01" />
-            </svg>
-            Follow these steps
+        <div className="mt-6 rounded-2xl bg-primary/5 p-5 sm:p-6">
+          <p className="mb-3 text-xs font-bold uppercase tracking-widest text-foreground">What this is</p>
+          <p className="text-base leading-relaxed text-foreground">
+            A 3-minute check that shows if you really understand an idea, or are just repeating words you've heard.
           </p>
-          <ol className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+
+          <p className="mb-3 mt-5 text-xs font-bold uppercase tracking-widest text-foreground">How it works</p>
+          <ol className="flex flex-col gap-2">
             {[
-              ["Step 1 - Pick", "Choose one concept question below."],
-              ["Step 2 - Explain", "Say it in your own words, like telling a friend."],
-              ["Step 3 - Solve", "Answer one question, then crack a new case."],
-            ].map(([title, text]) => (
-              <li key={title}>
-                <p className="font-bold text-foreground">{title}</p>
-                <p className="mt-1 text-sm leading-snug text-foreground/80">{text}</p>
+              "Pick a question below.",
+              "Explain the answer in your own words, like telling a friend.",
+              "See the sentence where you started repeating instead of explaining. It's highlighted in yellow.",
+              "Answer one follow-up question about it.",
+              "Solve a new case you haven't seen.",
+            ].map((step, i) => (
+              <li key={i} className="flex items-start gap-3 text-base leading-relaxed text-foreground">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                  {i + 1}
+                </span>
+                <span>{step}</span>
               </li>
             ))}
           </ol>
+
+          <p className="mb-3 mt-5 text-xs font-bold uppercase tracking-widest text-foreground">What you get</p>
+          <p className="text-base leading-relaxed text-foreground">Pass or Not yet, plus the correct answer.</p>
         </div>
       </header>
 
