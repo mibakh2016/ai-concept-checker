@@ -148,7 +148,7 @@ function Index() {
       {!concept && data.concepts.length > 3 && (
         <div className="mt-4 text-center">
           {!showAll && (
-            <button type="button" onClick={() => setShowAll(true)} className="font-bold text-primary">
+            <button type="button" onClick={() => setShowAll(true)} className="text-lg font-bold text-primary">
               {data.concepts.length - 3} more questions ▾
             </button>
           )}
