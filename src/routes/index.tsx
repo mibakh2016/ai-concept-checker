@@ -81,9 +81,9 @@ function Index() {
           </p>
           <ol className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             {[
-              ["1. Pick", "Choose one question below."],
-              ["2. Explain", "Say it in your own words, like telling a friend."],
-              ["3. Solve", "Answer one question, then crack a new case."],
+              ["Step 1 — Pick", "Choose one question below."],
+              ["Step 2 — Explain", "Say it in your own words, like telling a friend."],
+              ["Step 3 — Solve", "Answer one question, then crack a new case."],
             ].map(([title, text]) => (
               <li key={title}>
                 <p className="font-bold text-foreground">{title}</p>
