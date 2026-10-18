@@ -14,7 +14,236 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      attempts: {
+        Row: {
+          concept_id: string
+          created_at: string
+          explanation: string
+          id: string
+          session_id: string
+        }
+        Insert: {
+          concept_id: string
+          created_at?: string
+          explanation: string
+          id?: string
+          session_id: string
+        }
+        Update: {
+          concept_id?: string
+          created_at?: string
+          explanation?: string
+          id?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attempts_concept_id_fkey"
+            columns: ["concept_id"]
+            isOneToOne: false
+            referencedRelation: "concepts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cases: {
+        Row: {
+          answer_text: string
+          case_text: string
+          check_words: Json
+          concept_id: string
+          id: string
+        }
+        Insert: {
+          answer_text: string
+          case_text: string
+          check_words: Json
+          concept_id: string
+          id: string
+        }
+        Update: {
+          answer_text?: string
+          case_text?: string
+          check_words?: Json
+          concept_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cases_concept_id_fkey"
+            columns: ["concept_id"]
+            isOneToOne: true
+            referencedRelation: "concepts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      concepts: {
+        Row: {
+          id: string
+          position: number
+          question: string
+          topic_id: string
+        }
+        Insert: {
+          id: string
+          position: number
+          question: string
+          topic_id: string
+        }
+        Update: {
+          id?: string
+          position?: number
+          question?: string
+          topic_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "concepts_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      gaps: {
+        Row: {
+          attempt_id: string
+          created_at: string
+          follow_up: string
+          id: string
+          recited_sentence: string
+          session_id: string
+          trigger_id: string | null
+        }
+        Insert: {
+          attempt_id: string
+          created_at?: string
+          follow_up: string
+          id?: string
+          recited_sentence: string
+          session_id: string
+          trigger_id?: string | null
+        }
+        Update: {
+          attempt_id?: string
+          created_at?: string
+          follow_up?: string
+          id?: string
+          recited_sentence?: string
+          session_id?: string
+          trigger_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gaps_attempt_id_fkey"
+            columns: ["attempt_id"]
+            isOneToOne: false
+            referencedRelation: "attempts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "gaps_trigger_id_fkey"
+            columns: ["trigger_id"]
+            isOneToOne: false
+            referencedRelation: "triggers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      retries: {
+        Row: {
+          case_answer: string | null
+          case_id: string
+          created_at: string
+          gap_id: string
+          id: string
+          passed: boolean | null
+          second_try: string
+          session_id: string
+        }
+        Insert: {
+          case_answer?: string | null
+          case_id: string
+          created_at?: string
+          gap_id: string
+          id?: string
+          passed?: boolean | null
+          second_try: string
+          session_id: string
+        }
+        Update: {
+          case_answer?: string | null
+          case_id?: string
+          created_at?: string
+          gap_id?: string
+          id?: string
+          passed?: boolean | null
+          second_try?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "retries_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "cases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "retries_gap_id_fkey"
+            columns: ["gap_id"]
+            isOneToOne: false
+            referencedRelation: "gaps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      topics: {
+        Row: {
+          id: string
+          name: string
+        }
+        Insert: {
+          id: string
+          name: string
+        }
+        Update: {
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      triggers: {
+        Row: {
+          concept_id: string
+          follow_up: string
+          id: string
+          phrase: string
+        }
+        Insert: {
+          concept_id: string
+          follow_up: string
+          id: string
+          phrase: string
+        }
+        Update: {
+          concept_id?: string
+          follow_up?: string
+          id?: string
+          phrase?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "triggers_concept_id_fkey"
+            columns: ["concept_id"]
+            isOneToOne: false
+            referencedRelation: "concepts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
