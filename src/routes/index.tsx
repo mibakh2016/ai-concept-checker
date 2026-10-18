@@ -86,7 +86,7 @@ function Index() {
           Explain a concept in your own words. We guide you to real understanding if needed.
         </p>
 
-        <div className="mt-5 rounded-xl border bg-card p-4 shadow-sm">
+        <div className="mt-5 rounded-none border bg-card p-4 shadow-sm">
           <p className="mb-2 text-xs font-bold uppercase tracking-widest text-muted-foreground">Example</p>
           <p className="leading-relaxed">&ldquo;You need a password to log in.&rdquo;</p>
           <p className="leading-relaxed">
@@ -96,7 +96,7 @@ function Index() {
         </div>
 
         {!concept || stepsOpen ? (
-          <div className="mt-5 rounded-xl border border-primary bg-primary/5 p-4 sm:p-5">
+          <div className="mt-5 rounded-none border border-primary bg-primary/5 p-4 sm:p-5">
             <p className="mb-3 font-bold text-primary">How it works</p>
             <ol className="flex flex-col gap-2">
               {[
@@ -132,7 +132,7 @@ function Index() {
               type="button"
               disabled={!!concept}
               onClick={() => { setConcept(c); setStepsOpen(false); }}
-              className={`flex w-full items-center justify-between gap-3 rounded-xl border bg-card px-5 py-4 text-left text-base shadow-sm transition hover:border-foreground/40 disabled:cursor-default ${
+              className={`flex w-full items-center justify-between gap-3 rounded-none border bg-card px-5 py-4 text-left text-base shadow-sm transition hover:border-foreground/40 disabled:cursor-default ${
                 selected ? "border-2 border-foreground" : ""
               }`}
             >
