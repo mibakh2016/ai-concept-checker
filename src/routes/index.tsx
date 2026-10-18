@@ -71,7 +71,7 @@ function Index() {
       <header className="mb-8">
         <div className="mx-auto w-fit">
           <h1 className="text-left text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
-            Learning topic:<br />How Gen AI Apps Work
+            Learning topic:<br />How Gen AI apps work
           </h1>
         </div>
         <div className="mt-6">
