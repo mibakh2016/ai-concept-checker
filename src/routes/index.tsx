@@ -71,9 +71,12 @@ function Index() {
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-[640px] px-5 py-10 font-sans sm:py-16">
-      <div className="mb-6 flex items-center gap-2">
-        <CheckCircle2 className="h-5 w-5 text-primary" aria-hidden />
-        <span className="text-sm font-bold tracking-tight">Concept Check</span>
+      <div className="mb-6">
+        <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground">100x c8 Hackathon</p>
+        <div className="flex items-center gap-2">
+          <CheckCircle2 className="h-5 w-5 text-primary" aria-hidden />
+          <span className="text-sm font-bold tracking-tight">Concept Check</span>
+        </div>
       </div>
       <header className="mb-8">
         <div className="mx-auto w-fit">
