@@ -22,7 +22,7 @@ export const getConcepts = createServerFn({ method: "GET" })
   });
 
 async function findRecited(question: string, triggers: { id: string; phrase: string }[], explanation: string) {
-  const key = process.env.LOVABLE_API_KEY;
+  const key = process.env["LOVABLE_API_KEY"];
   if (!key) throw new Error("AI is not configured");
   const { createOpenAI } = await import("@ai-sdk/openai");
   const { streamText, Output } = await import("ai");
