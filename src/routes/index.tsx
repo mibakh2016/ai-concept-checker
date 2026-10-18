@@ -70,7 +70,7 @@ function Index() {
     <main className="mx-auto min-h-screen w-full max-w-[640px] px-5 py-10 font-sans sm:py-16">
       <header className="mb-8">
         <h1 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">{data.topicName}</h1>
-        <div className="mt-6 rounded-2xl border-2 border-dashed border-primary/40 bg-primary/5 p-5">
+        <div className="mt-6 rounded-2xl bg-primary/5 p-5">
           <p className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-foreground">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <circle cx="12" cy="12" r="10" />
@@ -85,7 +85,7 @@ function Index() {
               ["2. Explain", "Say it in your own words, like telling a friend."],
               ["3. Solve", "Answer one question, then crack a new case."],
             ].map(([title, text]) => (
-              <li key={title} className="rounded-xl border bg-card p-4 shadow-sm">
+              <li key={title}>
                 <p className="font-bold text-foreground">{title}</p>
                 <p className="mt-1 text-sm leading-snug text-foreground/80">{text}</p>
               </li>
