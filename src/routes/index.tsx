@@ -140,7 +140,7 @@ function Index() {
                 <span className="mr-2 font-bold text-muted-foreground">{i + 1}.</span>
                 <span className="font-bold">{c.question}</span>
               </span>
-              <span aria-hidden className="shrink-0 text-2xl font-black text-primary">➜</span>
+              <span aria-hidden className="shrink-0 text-xl font-black text-primary">➜</span>
             </button>
           );
         })}
