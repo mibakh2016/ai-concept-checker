@@ -149,7 +149,7 @@ function Index() {
         <div className="mt-4 text-center">
           {!showAll && (
             <button type="button" onClick={() => setShowAll(true)} className="text-lg font-bold text-primary">
-              {data.concepts.length - 3} more questions ▾
+              {data.concepts.length - 3} more questions <span aria-hidden className="text-2xl">▾</span>
             </button>
           )}
           <p className="mt-2 text-sm text-muted-foreground">
