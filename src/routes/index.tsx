@@ -70,11 +70,23 @@ function Index() {
     <main className="mx-auto min-h-screen w-full max-w-[640px] px-5 py-10 font-sans sm:py-16">
       <header className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{data.topicName}</h1>
-        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-          Pick one question below. Explain the answer in your own words, as if telling a friend. The app will point
-          at the sentence where you stopped explaining and started repeating, ask you one question about it, then
-          give you a new case to solve.
-        </p>
+        <ol className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          {[
+            ["Pick", "Choose one question below."],
+            ["Explain", "Say it in your own words, like telling a friend."],
+            ["Solve", "Answer one question, then crack a new case."],
+          ].map(([title, text], i) => (
+            <li key={title} className="flex items-start gap-3 rounded-xl border bg-card p-4 shadow-sm sm:flex-col">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
+                {i + 1}
+              </span>
+              <div>
+                <p className="font-semibold">{title}</p>
+                <p className="text-sm leading-snug text-muted-foreground">{text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </header>
 
       <div className="flex flex-col gap-3">
