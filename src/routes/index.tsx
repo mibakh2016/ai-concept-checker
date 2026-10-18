@@ -125,7 +125,7 @@ function Index() {
         )}
       </header>
 
-      <p className="mb-3 text-lg font-bold text-foreground">👉 Pick a concept question</p>
+      <p className="mb-3 text-lg font-bold text-foreground">👇 Pick a concept question</p>
       <div className="flex flex-col gap-3">
         {(concept ? [concept] : showAll ? data.concepts : data.concepts.slice(0, 3)).map((c, i) => {
           const selected = concept?.id === c.id;
