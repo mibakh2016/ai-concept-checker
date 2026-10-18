@@ -1,3 +1,4 @@
+import { CheckCircle2 } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { useEffect, useState, type ReactNode } from "react";
@@ -70,6 +71,10 @@ function Index() {
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-[640px] px-5 py-10 font-sans sm:py-16">
+      <div className="mb-6 flex items-center gap-2">
+        <CheckCircle2 className="h-5 w-5 text-primary" aria-hidden />
+        <span className="text-sm font-bold tracking-tight">Concept Check</span>
+      </div>
       <header className="mb-8">
         <div className="mx-auto w-fit">
           <h1 className="text-left leading-tight tracking-tight">
