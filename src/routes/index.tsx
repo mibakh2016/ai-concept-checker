@@ -77,7 +77,7 @@ function Index() {
               <path d="M12 16v-4" />
               <path d="M12 8h.01" />
             </svg>
-            Follow the steps
+            Follow these steps
           </p>
           <ol className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             {[
