@@ -70,23 +70,28 @@ function Index() {
     <main className="mx-auto min-h-screen w-full max-w-[640px] px-5 py-10 font-sans sm:py-16">
       <header className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{data.topicName}</h1>
-        <ol className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
-          {[
-            ["Pick", "Choose one question below."],
-            ["Explain", "Say it in your own words, like telling a friend."],
-            ["Solve", "Answer one question, then crack a new case."],
-          ].map(([title, text], i) => (
-            <li key={title} className="flex items-start gap-3 rounded-xl border bg-card p-4 shadow-sm sm:flex-col">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
-                {i + 1}
-              </span>
-              <div>
-                <p className="font-semibold">{title}</p>
-                <p className="text-sm leading-snug text-muted-foreground">{text}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+        <div className="mt-6 rounded-2xl border-2 border-dashed border-primary/40 bg-primary/5 p-5">
+          <p className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 16v-4" />
+              <path d="M12 8h.01" />
+            </svg>
+            How this works — follow the 3 steps
+          </p>
+          <ol className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            {[
+              ["1. Pick", "Choose one question below."],
+              ["2. Explain", "Say it in your own words, like telling a friend."],
+              ["3. Solve", "Answer one question, then crack a new case."],
+            ].map(([title, text]) => (
+              <li key={title} className="rounded-xl border bg-card p-4 shadow-sm">
+                <p className="font-bold">{title}</p>
+                <p className="mt-1 text-sm leading-snug text-muted-foreground">{text}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
       </header>
 
       <div className="flex flex-col gap-3">
