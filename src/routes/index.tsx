@@ -94,7 +94,7 @@ function Index() {
         </div>
       </header>
 
-      <p className="mb-3 text-xs font-bold uppercase tracking-widest text-muted-foreground">Pick a question</p>
+      <p className="mb-3 text-xs font-bold uppercase tracking-widest text-foreground">Pick a question</p>
       <div className="flex flex-col gap-3">
         {(concept ? [concept] : data.concepts).map((c, i) => {
           const selected = concept?.id === c.id;
