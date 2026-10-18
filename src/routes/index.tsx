@@ -69,7 +69,7 @@ function Index() {
   return (
     <main className="mx-auto min-h-screen w-full max-w-[640px] px-5 py-10 font-sans sm:py-16">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{data.topicName}</h1>
+        <h1 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">{data.topicName}</h1>
         <div className="mt-6 rounded-2xl border-2 border-dashed border-primary/40 bg-primary/5 p-5">
           <p className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
