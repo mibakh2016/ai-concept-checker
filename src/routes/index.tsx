@@ -87,7 +87,7 @@ function Index() {
         </p>
 
         <div className="mt-5 rounded-none border bg-card p-4 shadow-sm">
-          <p className="mb-2 text-xs font-bold uppercase tracking-widest text-muted-foreground">Example</p>
+          <p className="mb-2 text-base font-bold text-primary">Example</p>
           <p className="leading-relaxed">&ldquo;You need a password to log in.&rdquo;</p>
           <p className="leading-relaxed">
             <mark className="rounded bg-highlight px-1 text-highlight-foreground">It's private because of encryption.</mark>
