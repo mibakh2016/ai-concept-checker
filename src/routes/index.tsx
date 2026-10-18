@@ -69,7 +69,8 @@ function Index() {
   return (
     <main className="mx-auto min-h-screen w-full max-w-[640px] px-5 py-10 font-sans sm:py-16">
       <header className="mb-8">
-        <h1 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">{data.topicName}</h1>
+        <h1 className="text-center text-xs font-bold uppercase tracking-widest text-foreground">Learning topic</h1>
+        <p className="mt-1 text-center text-2xl font-bold tracking-tight sm:text-3xl">How Gen AI Apps Work</p>
         <div className="mt-6 rounded-2xl bg-primary/5 p-5 sm:p-6">
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-foreground">What this is</p>
           <p className="text-base leading-relaxed text-foreground">
