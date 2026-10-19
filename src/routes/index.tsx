@@ -80,7 +80,7 @@ function Index() {
         <span className="text-xs font-bold tracking-tight">Concept Check</span>
       </div>
       <header className="mb-8">
-        <h1 className="leading-tight tracking-tight">
+        <h1 className="mx-auto w-fit text-left leading-tight tracking-tight">
           <span className="block text-xl font-bold text-foreground sm:text-2xl">Learning topic:</span>
           <span className="flex flex-wrap items-baseline gap-x-4">
             <span className="text-xl font-bold text-foreground sm:text-2xl">{topic.name}</span>
