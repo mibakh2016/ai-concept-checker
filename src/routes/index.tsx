@@ -155,6 +155,12 @@ function Index() {
         )}
       </header>
 
+      {concept && (
+        <button type="button" onClick={() => { reset(); setStepsOpen(true); }}
+          className="mb-2 font-bold text-primary">
+          ← Back to questions
+        </button>
+      )}
       <p className="mb-3 text-lg font-bold text-foreground">👇 Pick a concept question</p>
       <div className="flex flex-col gap-3">
         {(concept ? [concept] : showAll ? data.concepts : data.concepts.slice(0, 3)).map((c, i) => {
