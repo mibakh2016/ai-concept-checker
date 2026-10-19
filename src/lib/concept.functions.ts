@@ -9,17 +9,18 @@ async function admin() {
   return supabaseAdmin;
 }
 
-export const getConcepts = createServerFn({ method: "GET" })
-  .inputValidator((d: { topicId: string }) => z.object({ topicId: z.string().max(20) }).parse(d))
-  .handler(async ({ data }) => {
-    const db = await admin();
-    const [{ data: topic }, { data: concepts, error }] = await Promise.all([
-      db.from("topics").select("id,name").eq("id", data.topicId).maybeSingle(),
-      db.from("concepts").select("id,question").eq("topic_id", data.topicId).order("position"),
-    ]);
-    if (error) throw new Error("Could not load concepts");
-    return { topicName: topic?.name ?? "", concepts: concepts ?? [] };
-  });
+export const getTopics = createServerFn({ method: "GET" }).handler(async () => {
+  const db = await admin();
+  const [{ data: topics, error }, { data: concepts, error: e2 }] = await Promise.all([
+    db.from("topics").select("id,name,example_line,example_mark").order("position"),
+    db.from("concepts").select("id,topic_id,question").order("position"),
+  ]);
+  if (error || e2) throw new Error("Could not load topics");
+  return (topics ?? []).map((t) => ({
+    ...t,
+    concepts: (concepts ?? []).filter((c) => c.topic_id === t.id).map(({ id, question }) => ({ id, question })),
+  }));
+});
 
 async function findRecited(question: string, triggers: { id: string; phrase: string }[], explanation: string) {
   const key = process.env["LOVABLE_API_KEY"];
@@ -68,17 +69,17 @@ export const analyze = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }) => {
     const db = await admin();
+    const [{ data: concept }, { data: triggers }] = await Promise.all([
+      db.from("concepts").select("question,topic_id").eq("id", data.conceptId).single(),
+      db.from("triggers").select("id,phrase,follow_up").eq("concept_id", data.conceptId),
+    ]);
+    if (!concept) throw new Error("Not found");
     const { data: attempt, error } = await db
       .from("attempts")
-      .insert({ session_id: data.sessionId, concept_id: data.conceptId, explanation: data.explanation })
+      .insert({ session_id: data.sessionId, concept_id: data.conceptId, topic_id: concept.topic_id, explanation: data.explanation })
       .select("id")
       .single();
     if (error || !attempt) throw new Error("Could not save attempt");
-
-    const [{ data: concept }, { data: triggers }] = await Promise.all([
-      db.from("concepts").select("question").eq("id", data.conceptId).single(),
-      db.from("triggers").select("id,phrase,follow_up").eq("concept_id", data.conceptId),
-    ]);
     const trig = triggers ?? [];
     let ai: { recited_sentence: string; trigger_id: string | null; follow_up: string | null } | null = null;
     try {

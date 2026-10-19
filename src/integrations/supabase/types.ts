@@ -21,6 +21,7 @@ export type Database = {
           explanation: string
           id: string
           session_id: string
+          topic_id: string | null
         }
         Insert: {
           concept_id: string
@@ -28,6 +29,7 @@ export type Database = {
           explanation: string
           id?: string
           session_id: string
+          topic_id?: string | null
         }
         Update: {
           concept_id?: string
@@ -35,6 +37,7 @@ export type Database = {
           explanation?: string
           id?: string
           session_id?: string
+          topic_id?: string | null
         }
         Relationships: [
           {
@@ -42,6 +45,13 @@ export type Database = {
             columns: ["concept_id"]
             isOneToOne: false
             referencedRelation: "concepts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "attempts_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
             referencedColumns: ["id"]
           },
         ]
@@ -202,16 +212,25 @@ export type Database = {
       }
       topics: {
         Row: {
+          example_line: string
+          example_mark: string
           id: string
           name: string
+          position: number
         }
         Insert: {
+          example_line?: string
+          example_mark?: string
           id: string
           name: string
+          position?: number
         }
         Update: {
+          example_line?: string
+          example_mark?: string
           id?: string
           name?: string
+          position?: number
         }
         Relationships: []
       }
