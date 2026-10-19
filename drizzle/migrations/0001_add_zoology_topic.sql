@@ -1,0 +1,57 @@
+alter table public.topics add column position int not null default 1, add column example_line text not null default '', add column example_mark text not null default '';
+alter table public.attempts add column topic_id text references public.topics(id);
+update public.topics set name='Gen AI Apps', position=1, example_line='You need a password to log in.', example_mark='It''s private because of encryption.' where id='M2';
+insert into public.topics values ('Z1','Zoology',2,'Fish live in water.','They breathe because of gills.');
+insert into public.concepts values
+('Z1C1','Z1',1,'Why do fish have gills?'),
+('Z1C2','Z1',2,'Why are some animals the same color as where they live?'),
+('Z1C3','Z1',3,'What is a food chain?'),
+('Z1C4','Z1',4,'What makes an animal a mammal?'),
+('Z1C5','Z1',5,'Why do birds have light, hollow bones?'),
+('Z1C6','Z1',6,'Why do some animals sleep all winter?'),
+('Z1C7','Z1',7,'Why do lions have eyes in front, but rabbits on the sides?'),
+('Z1C8','Z1',8,'Why do some birds fly south in winter?'),
+('Z1C9','Z1',9,'How can teeth tell you what an animal eats?'),
+('Z1C10','Z1',10,'Why do lizards lie in the sun?');
+insert into public.triggers values
+('Z1C1-1','Z1C1','to breathe','Breathe what? Where does the fish get it from, if not from air?'),
+('Z1C1-2','Z1C1','because they live in water','A whale lives in water too, but has no gills. So what do gills actually do?'),
+('Z1C1-3','Z1C1','oxygen','Where is that oxygen, and how does it get from the water into the fish?'),
+('Z1C2-1','Z1C2','camouflage','Say it without that word: who is looking, and what can''t they do?'),
+('Z1C2-2','Z1C2','to blend in','Blend in so that what happens, or doesn''t happen?'),
+('Z1C2-3','Z1C2','to hide','Hide from whom? What would happen to a bright-colored one?'),
+('Z1C3-1','Z1C3','the circle of life','Say it plainly: who eats whom, and what moves along the chain?'),
+('Z1C3-2','Z1C3','energy','Where does the energy start, and how does it get to the fox?'),
+('Z1C3-3','Z1C3','predators and prey','All the grass disappears. What happens to the fox, and why?'),
+('Z1C4-1','Z1C4','warm-blooded','Birds are warm-blooded too. What do mammals have that birds don''t?'),
+('Z1C4-2','Z1C4','they have fur','A dolphin has almost no fur. Why is it still a mammal?'),
+('Z1C4-3','Z1C4','they give birth','A platypus lays eggs and is a mammal. What does every mammal mother do for her babies?'),
+('Z1C5-1','Z1C5','to fly','What would happen to a bird with heavy, solid bones when it flaps?'),
+('Z1C5-2','Z1C5','they are lighter','Lighter so what? What does weight change for a flying animal?'),
+('Z1C5-3','Z1C5','adaptation','Say it without that word: what problem do hollow bones solve?'),
+('Z1C6-1','Z1C6','hibernation','Say it without that word: what is missing in winter, and how does sleeping help?'),
+('Z1C6-2','Z1C6','because it''s cold','Many animals stay awake in the cold. What runs out in winter?'),
+('Z1C6-3','Z1C6','to save energy','Why do they need to save it? What can''t they find in winter?'),
+('Z1C7-1','Z1C7','predator','What does a hunter need to judge before it jumps?'),
+('Z1C7-2','Z1C7','to see better','See what better? What does each animal need to see?'),
+('Z1C7-3','Z1C7','prey','What does a rabbit need to notice, and from which direction?'),
+('Z1C8-1','Z1C8','migration','Say it without that word: what are they going to find in the south?'),
+('Z1C8-2','Z1C8','because it''s cold','Birds have warm feathers. What runs out in the north in winter?'),
+('Z1C8-3','Z1C8','instinct','Instinct to do what, and what would happen if they stayed?'),
+('Z1C9-1','Z1C9','they are different','Different how? What does a sharp tooth do that a flat one can''t?'),
+('Z1C9-2','Z1C9','carnivore','Say it without that word: what shape of tooth do you need for meat?'),
+('Z1C9-3','Z1C9','it depends on the diet','What shape of tooth grinds plants? What shape tears meat?'),
+('Z1C10-1','Z1C10','cold-blooded','Say it without that word: where does a lizard''s body heat come from?'),
+('Z1C10-2','Z1C10','to get warm','Why does it need to be warm? What can''t a cold lizard do?'),
+('Z1C10-3','Z1C10','they like it','What happens to a lizard that stays in the shade all day?');
+insert into public.cases values
+('Z1C1-case','Z1C1','A fish is taken out of the water. Its gills are fine. Why can''t it breathe?','Gills only take oxygen from water, not from air.','[["water"]]'),
+('Z1C2-case','Z1C2','A white rabbit lives where snow has melted and the ground is brown. What is more likely to happen to it?','A predator sees it and catches it.','[["seen","see","sees","spot","spotted","caught","catch","eaten","eat","notice"]]'),
+('Z1C3-case','Z1C3','Grass → rabbit → fox. All the rabbits get sick and disappear. What happens to the foxes?','They run out of food and go hungry.','[["food","hungry","starve","starving","die","fewer"]]'),
+('Z1C4-case','Z1C4','A new animal has hair and its mother feeds the babies milk. Is it a mammal?','Yes.','[["yes"]]'),
+('Z1C5-case','Z1C5','A bird is born with heavy, solid bones. What will it find hard to do?','Fly.','[["fly","flying","flight"]]'),
+('Z1C6-case','Z1C6','A bear lives where there is plenty of food all winter. Does it need to sleep all winter?','No. It can keep eating.','[["no"]]'),
+('Z1C7-case','Z1C7','A new animal has eyes on the sides of its head. Is it more likely the hunter or the hunted?','The hunted.','[["hunted","prey"]]'),
+('Z1C8-case','Z1C8','A garden has bird feeders full of seeds all winter. Some birds stay instead of flying south. Why?','They have enough food there.','[["food","seeds","eat"]]'),
+('Z1C9-case','Z1C9','A skull has long, sharp, pointed teeth. Does the animal mostly eat plants or meat?','Meat.','[["meat"]]'),
+('Z1C10-case','Z1C10','A lizard is cold in the morning. Will it be fast or slow until it warms up?','Slow.','[["slow"]]');
