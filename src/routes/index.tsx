@@ -86,7 +86,7 @@ function Index() {
             <span className="text-xl font-bold text-foreground sm:text-2xl">{topic.name}</span>
             {others.map((t) => (
               <button key={t.id} type="button" onClick={() => switchTopic(t.id)}
-                className="text-base font-normal text-muted-foreground/70 transition hover:text-muted-foreground">
+                className="text-base font-normal text-muted-foreground/70 transition hover:text-primary hover:drop-shadow-[0_0_6px_var(--primary)] hover:brightness-125">
                 {t.name}
               </button>
             ))}
