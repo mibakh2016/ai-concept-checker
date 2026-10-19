@@ -1,8 +1,9 @@
 import { CheckCircle2 } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { analyze, getTopics, judge, retry } from "@/lib/concept.functions";
+import { resolveTopicChoice, TOPIC_STORAGE_KEY } from "@/lib/topic-choice";
 
 const conceptsQuery = queryOptions({
   queryKey: ["topics"],
@@ -46,10 +47,20 @@ const ERR = "Something went wrong. Try again.";
 function Index() {
   const { data: topics } = useSuspenseQuery(conceptsQuery);
   const [topicId, setTopicId] = useState(topics[0]?.id ?? "");
-  const topic = topics.find((t) => t.id === topicId) ?? topics[0]!;
-  const others = topics.filter((t) => t.id !== topic.id);
+  const topic = topics.find((t) => t.id === topicId) ?? topics[0];
+  const others = topics.filter((t) => t.id !== topic?.id);
   const data = topic;
-  const switchTopic = (id: string) => { setTopicId(id); reset(); setShowAll(false); setStepsOpen(true); };
+  const switchTopic = (id: string) => {
+    setTopicId(id);
+    try { localStorage.setItem(TOPIC_STORAGE_KEY, id); } catch { /* Storage can be unavailable. */ }
+    reset(); setShowAll(false); setStepsOpen(true);
+  };
+  useEffect(() => {
+    let saved: string | null = null;
+    try { saved = localStorage.getItem(TOPIC_STORAGE_KEY); } catch { /* Use the default topic. */ }
+    setTopicId(resolveTopicChoice(saved, topics.map((t) => t.id)));
+  }, [topics]);
+  const flowVersion = useRef(0);
   const sessionId = useSessionId();
   const [concept, setConcept] = useState<{ id: string; question: string } | null>(null);
   const [explanation, setExplanation] = useState("");
@@ -64,14 +75,26 @@ function Index() {
   const [showAll, setShowAll] = useState(false);
 
   const reset = () => {
+    flowVersion.current += 1;
+    setBusy(null);
     setConcept(null); setExplanation(""); setGap(null); setSecondTry("");
     setKase(null); setAnswer(""); setResult(null); setError(null);
   };
 
   async function run<T>(step: "analyze" | "retry" | "judge", fn: () => Promise<T>, done: (v: T) => void) {
+    const version = flowVersion.current;
     setBusy(step); setError(null);
-    try { done(await fn()); } catch { setError(ERR); } finally { setBusy(null); }
+    try {
+      const value = await fn();
+      if (version === flowVersion.current) done(value);
+    } catch {
+      if (version === flowVersion.current) setError(ERR);
+    } finally {
+      if (version === flowVersion.current) setBusy(null);
+    }
   }
+
+  if (!topic || !data) return null;
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-[640px] px-5 py-10 font-sans sm:py-16">
@@ -176,8 +199,8 @@ function Index() {
           {!gap && (
             <Submit disabled={!explanation.trim() || !sessionId || !!busy}
               loading={busy === "analyze"} loadingText="Reading your explanation..."
-              onClick={() => run("analyze",
-                () => analyze({ data: { sessionId: sessionId!, conceptId: concept.id, explanation } }), setGap)} />
+              onClick={() => { if (!sessionId) return; void run("analyze",
+                () => analyze({ data: { sessionId, conceptId: concept.id, explanation } }), setGap); }} />
           )}
           {!gap && error && <ErrorText />}
         </Card>
@@ -191,8 +214,8 @@ function Index() {
             placeholder="Try again: what actually happens?" />
           {!kase && (
             <Submit disabled={!secondTry.trim() || !!busy} loading={busy === "retry"} loadingText="Saving..."
-              onClick={() => run("retry",
-                () => retry({ data: { sessionId: sessionId!, gapId: gap.gapId, secondTry } }), setKase)} />
+              onClick={() => { if (!sessionId) return; void run("retry",
+                () => retry({ data: { sessionId, gapId: gap.gapId, secondTry } }), setKase); }} />
           )}
           {!kase && error && <ErrorText />}
         </Card>
@@ -205,8 +228,8 @@ function Index() {
           <Box value={answer} onChange={setAnswer} readOnly={!!result} rows={3} placeholder="Your answer" />
           {!result && (
             <Submit disabled={!answer.trim() || !!busy} loading={busy === "judge"} loadingText="Checking..."
-              onClick={() => run("judge",
-                () => judge({ data: { sessionId: sessionId!, retryId: kase.retryId, caseAnswer: answer } }), setResult)} />
+              onClick={() => { if (!sessionId) return; void run("judge",
+                () => judge({ data: { sessionId, retryId: kase.retryId, caseAnswer: answer } }), setResult); }} />
           )}
           {!result && error && <ErrorText />}
         </Card>
