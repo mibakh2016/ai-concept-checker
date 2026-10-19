@@ -2,12 +2,11 @@ import { CheckCircle2 } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { useEffect, useState, type ReactNode } from "react";
-import { analyze, getConcepts, judge, retry } from "@/lib/concept.functions";
+import { analyze, getTopics, judge, retry } from "@/lib/concept.functions";
 
-const TOPIC = "M2";
 const conceptsQuery = queryOptions({
-  queryKey: ["concepts", TOPIC],
-  queryFn: () => getConcepts({ data: { topicId: TOPIC } }),
+  queryKey: ["topics"],
+  queryFn: () => getTopics(),
 });
 
 export const Route = createFileRoute("/")({
