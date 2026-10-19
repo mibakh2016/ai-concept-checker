@@ -12,7 +12,7 @@ async function admin() {
 export const getTopics = createServerFn({ method: "GET" }).handler(async () => {
   const db = await admin();
   const [{ data: topics, error }, { data: concepts, error: e2 }] = await Promise.all([
-    db.from("topics").select("id,name,example_line,example_mark").order("position"),
+    db.from("topics").select("id,name,example_line,example_mark").in("id", ["M2", "ZOO"]).order("position"),
     db.from("concepts").select("id,topic_id,question").order("position"),
   ]);
   if (error || e2) throw new Error("Could not load topics");
@@ -89,7 +89,8 @@ export const analyze = createServerFn({ method: "POST" })
     }
 
     const resolved = resolveRecited(data.explanation, ai?.recited_sentence, trig);
-    const aiTrigger = ai?.trigger_id && trig.find((t) => t.id === ai!.trigger_id);
+    const aiTriggerId = ai?.trigger_id;
+    const aiTrigger = aiTriggerId && trig.find((t) => t.id === aiTriggerId);
     const sentenceOk = ai?.recited_sentence && resolved.sentence === ai.recited_sentence.trim();
     const triggerId = (sentenceOk && aiTrigger ? aiTrigger.id : null) ?? resolved.triggerId;
     const matched = trig.find((t) => t.id === triggerId);
