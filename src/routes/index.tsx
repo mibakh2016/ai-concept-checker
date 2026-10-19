@@ -46,7 +46,7 @@ const ERR = "Something went wrong. Try again.";
 function Index() {
   const { data: topics } = useSuspenseQuery(conceptsQuery);
   const [topicId, setTopicId] = useState(topics[0]?.id ?? "");
-  const topic = topics.find((t) => t.id === topicId) ?? topics[0];
+  const topic = topics.find((t) => t.id === topicId) ?? topics[0]!;
   const others = topics.filter((t) => t.id !== topic.id);
   const data = topic;
   const switchTopic = (id: string) => { setTopicId(id); reset(); setShowAll(false); setStepsOpen(true); };
