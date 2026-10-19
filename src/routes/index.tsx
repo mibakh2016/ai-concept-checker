@@ -44,7 +44,12 @@ type Result = { passed: boolean; answerText: string };
 const ERR = "Something went wrong. Try again.";
 
 function Index() {
-  const { data } = useSuspenseQuery(conceptsQuery);
+  const { data: topics } = useSuspenseQuery(conceptsQuery);
+  const [topicId, setTopicId] = useState(topics[0]?.id ?? "");
+  const topic = topics.find((t) => t.id === topicId) ?? topics[0];
+  const others = topics.filter((t) => t.id !== topic.id);
+  const data = topic;
+  const switchTopic = (id: string) => { setTopicId(id); reset(); setShowAll(false); setStepsOpen(true); };
   const sessionId = useSessionId();
   const [concept, setConcept] = useState<{ id: string; question: string } | null>(null);
   const [explanation, setExplanation] = useState("");
@@ -70,29 +75,32 @@ function Index() {
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-[640px] px-5 py-10 font-sans sm:py-16">
-      <div className="mb-6">
-        <p className="mb-0.5 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">100x c8 Hackathon</p>
-        <div className="flex items-center gap-1.5">
-          <CheckCircle2 className="h-4 w-4 text-primary" aria-hidden />
-          <span className="text-xs font-bold tracking-tight">Concept Check</span>
-        </div>
+      <div className="mb-6 flex items-center gap-1.5">
+        <CheckCircle2 className="h-4 w-4 text-primary" aria-hidden />
+        <span className="text-xs font-bold tracking-tight">Concept Check</span>
       </div>
       <header className="mb-8">
-        <div className="mx-auto w-fit">
-          <h1 className="text-left leading-tight tracking-tight">
-            <span className="block text-xl font-bold text-foreground sm:text-2xl">Learning topic:</span>
-            <span className="block text-xl font-bold text-foreground sm:text-2xl">How gen AI apps work</span>
-          </h1>
-        </div>
+        <h1 className="leading-tight tracking-tight">
+          <span className="block text-xl font-bold text-foreground sm:text-2xl">Learning topic:</span>
+          <span className="flex flex-wrap items-baseline gap-x-4">
+            <span className="text-xl font-bold text-foreground sm:text-2xl">{topic.name}</span>
+            {others.map((t) => (
+              <button key={t.id} type="button" onClick={() => switchTopic(t.id)}
+                className="text-base font-normal text-muted-foreground/70 transition hover:text-muted-foreground">
+                {t.name}
+              </button>
+            ))}
+          </span>
+        </h1>
         <p className="mt-6 text-base leading-relaxed text-foreground">
           Explain a concept in your own words. We guide you to real understanding if needed.
         </p>
 
         <div className="mt-5 rounded-none border bg-card p-4 shadow-sm">
           <p className="mb-2 text-base font-bold text-primary">Example</p>
-          <p className="leading-relaxed">&ldquo;You need a password to log in.&rdquo;</p>
+          <p className="leading-relaxed">&ldquo;{topic.example_line}&rdquo;</p>
           <p className="leading-relaxed">
-            <mark className="rounded bg-highlight px-1 text-highlight-foreground">It's private because of encryption.</mark>
+            <mark className="rounded bg-highlight px-1 text-highlight-foreground">{topic.example_mark}</mark>
           </p>
           <p className="mt-2 text-sm font-semibold text-destructive">↑ here they stopped explaining</p>
         </div>
