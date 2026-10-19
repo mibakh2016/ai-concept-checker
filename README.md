@@ -2,7 +2,7 @@
 
 A 3-minute concept check that shows whether you really understand an idea, or are just repeating words you've heard. Pick a question, explain it in your own words, and get feedback with the correct answer.
 
-**Live app**: https://ai-concept-checker.lovable.app
+**Live app**: https://ai-concept-checker.com
 
 ## Development
 
